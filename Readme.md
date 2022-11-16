@@ -2,7 +2,7 @@ In this repository, we are going to write a code to integrate a 1D dimensional i
 
 The example integration being solved for is, 
 
-$$ int_0^1 x^2 dx $$
+$$\int_0^1 x^2 dx$$
 
 
 
