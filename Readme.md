@@ -1,4 +1,4 @@
-<u>#Monte Carlo's integration <u>
+#Monte Carlo's integration
 
 In this repository, we are going to write a code to integrate a 1D dimensional integration using Monte Carlo, this method can be extended to higher order dimensional integration.
 
