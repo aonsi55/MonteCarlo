@@ -48,7 +48,7 @@ pip install onsi-mc
 
 We will use the library to evaluate the following integral,
 
-$$\int_0^{\pi/2} , \int_0^{\pi} , \int_0^1 e^{-x_1^2} , \sin{x_2} , \cos{x_3} d x_1 , d x_2 , d x_3$$
+$$\int_0^{\pi/2} ~ \int_0^{\pi} ~ \int_0^1 ~ e^{-x_1^2} ~ \sin{x_2} ~ \cos{x_3} ~ d x_1 ~ d x_2 ~ d x_3$$
 
 ```
 import numpy as np
