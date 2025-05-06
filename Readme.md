@@ -93,7 +93,7 @@ Visualizes convergence analysis.
 ### Example Usage
 A simple usage case for 1D integral evaluation, 
 
-$$\int_0^2 \. x^3 - 2 x + 1 \. dx$$
+$$\int_0^2 ~ x^3 - 2 x + 1 ~ dx$$
 
 ```
 from mc import ND
