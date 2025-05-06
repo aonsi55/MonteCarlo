@@ -1,3 +1,5 @@
+# Python Library to Solve N-Dimensional Integration ``onsi-mc``
+
 ## Evaluating N-Dimensional Integration with Monte Carlo Methods
 ### Mathematical Basis
 Another problem which can be solved using Monte Carlo's method is numerical integration. From the definition of the average of a function we have:
