@@ -37,67 +37,107 @@ $$\int_{a_N}^{b_N} \cdots \int_{a_2}^{b_2} \int_{a_1}^{b_1} f(x_1, x_2, \ldots, 
 What's impressive is that the difficulty of integrating a higher-order integral doesn't increase significantly with Monte Carlo methods, making it suitable for complex integrals.
 
 ### Python Implementation Example
-The following Python code demonstrates how to integrate a one-dimensional integral:
+A python library onsi-mc has been published on PyPI, which can be installed using 
+```
+pip install onsi-mc
+```
 
-$$\int_{\pi/2}^{\pi} \cos^2(x) \cdot e^{3x} \cdot \sin(x) \cdot x^3 , dx$$
-
+### Quick Start
 ```
 import numpy as np
-import pandas as pd
-import random
-import math 
+from onsi_mc import ND
 
-# n is the total number of points to be generated
-n = 1*10**3
-# N is the number of loop repetitions
-N = 1*10**3
-int_list = []
+# Define a function to integrate
+def func(x1, x2, x3):
+    """3D integration function with vectorized support"""
+    return np.exp(-x1**2) * np.sin(x2) * np.cos(x3)
 
-for i in range(1,N):
-    a = (math.pi)/2
-    b = math.pi
-    x = np.random.uniform(a,b,n)
-    Integrand = []
-    lengthx = b-a
-    
-    for i in range(0,n):
-        Integrand.append((math.cos(x[i]))**2*(math.exp(x[i]))*x[i]**3*math.sin(x[i]))
-        
-    df = pd.DataFrame({'x':x,'Integrand':Integrand})
-    Average_Func = sum(df['Integrand'])/len(df['Integrand'])
-    Integration = Average_Func*lengthx
-    int_list.append(Integration)
-    
-Average_Int = sum(int_list)/len(int_list)
-print(Average_Int)
+# Create integrator with integration bounds
+mc = ND(func, 0.0, 1.0, 0.0, np.pi, 0.0, np.pi/2)
+
+# Run the integration
+result = mc.run()
+
+# Plot convergence analysis
+mc.plot(save=True)
+```
+### API Reference
+ND class: `ND(func, *args, n=50000, N=1000, convergence_threshold=0.1, use_numba=True)`
+- `func`: Function to integrate. Must accept N arguments.
+- `*args`: Integration bounds. Must be in pairs for each dimension. For example, for 3D: `a1, b1, a2, b2, a3, b3`.
+- `n`: Number of random points to sample. Default is 50,000.
+- `N`: Number of iterations for convergence analysis. Default is 1,000.
+- `convergence_threshold`: Threshold for convergence analysis. Default is 0.5.
+- `use_numba`: If True, uses Numba for JIT compilation. Default is True.
+
+#### Methods
+`run(verbose=True, progress_bar=True)`
+This method runs the Monte Carlo integration and returns the result.
+- `verbose`: If True, prints the result. Default is True.
+- `progress_bar`: If True, shows a progress bar. Default is True.
+
+`plot(show=True, save=False, filename=None)`
+Visualizes convergence analysis.
+- `show`: If True, displays the plot. Default is True.
+- `save`: Saves plot to file. Default is False.
+- `filename`:  Custom filename (default: "mc_convergence_n{n}_N{N}.png").
+
+
+### Example Usage
 
 ```
+from mc import ND
+import numpy as np
 
-The output of this code yields an average of 72.808, while the exact value calculated using Wolfram Alpha is 72.7. This is remarkably accurate, considering the complexity of the integration. The execution time is only around 3.8 seconds for 1000 generated points, with the process repeated 1000 times.
+# 1D integration example: ∫(x³ - 2x + 1)dx from 0 to 2
+def f1d(x):
+    return x**3 - 2*x + 1
 
+# Create integrator with 0 to 2 limits
+mc1 = ND(f1d, 0, 2)
+result1 = mc1.run()
 
---------------
+# 3D integration example
+def f3d(x, y, z):
+    return np.exp(-x**2) * np.sin(y) * np.cos(z)
 
+# Create integrator with limits [0,1] × [0,π] × [0,π/2]
+mc3 = ND(
+    f3d, 
+    0.0, 1.0,   # x limits
+    0.0, np.pi, # y limits
+    0.0, np.pi/2 # z limits
+)
 
-# Monte Carlo's integration
+# Run with default settings
+result3 = mc3.run()
 
-- In this repository, we are going to write a code to integrate a 1D dimensional integration using Monte Carlo, this method can be extended to higher order dimensional integration. 
-
-
-
-- The example integration being solved for is, 
-
-$$\int_0^1 x^2 dx$$
-
-- The code is written and executed using python 3. In order to use the code you need to make sure that numpy package is installed in your device, else the code will throw an error, you can check whether the package is installed via terminal for linux using the following 
+# Plot convergence analysis
+mc3.plot(save=True)
 ```
-pip3 show numpy
+
+### Expected Output
+When running the integration, you'll see one of two outcomes:
+1. Successful Convergence
+If the integration converges properly (standard deviation difference is below threshold):
 ```
-If the package is installed, the code would pirnt out the version information of the package, else you can use the following called to have numpy installed in your device,
+Integrating: 100%|██████████| 1000/1000 [00:02<00:00, 396.60it/s]
+Estimated integral: 0.60653211
 ```
-pip3 install numpy
+The function returns this value, which you can use in subsequent calculations.
+2. Non-Convergence Warning
+If the integration fails to converge (standard deviation difference exceeds threshold):
+```
+Integrating: 100%|██████████| 1000/1000 [00:03<00:00, 327.42it/s]
+Warning: Possible non-convergence (Δstd = 0.1237 > threshold = 0.1000)
+Estimated integral: 0.60912458
 ```
 
+In this case, the function returns None to indicate possible unreliability, though you can still access the estimated value as shown in the output message.
+
+You can visualize the convergence behavior using the plot() method to determine whether increasing N or adjusting other parameters might help achieve convergence.
+
+___________
 
 Feel free to contact me, if you need help. 
 aonsi@alexu.edu.eg
