@@ -38,7 +38,7 @@ $$\int_{a_N}^{b_N} \cdots \int_{a_2}^{b_2} \int_{a_1}^{b_1} f(x_1, x_2, \ldots, 
 
 What's impressive is that the difficulty of integrating a higher-order integral doesn't increase significantly with Monte Carlo methods, making it suitable for complex integrals.
 
-### Python Implementation Example
+# Python Implementation Example
 A python library onsi-mc has been published on PyPI, which can be installed using 
 ```
 pip install onsi-mc
