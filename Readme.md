@@ -47,7 +47,7 @@ pip install onsi-mc
 ### Quick Start
 
 We will use the library to evaluate the following integral
-$$ \int_0^{\pi/2} \int_0^{\pi} \int_0^1 e^{-x_1^2} \, \sin{x_2} \, \cos{x_3} d x_1 \, d x_2 \, d x_3 $$
+$$\int_0^{\pi/2} \int_0^{\pi} \int_0^1 e^{-x_1^2} \, \sin{x_2} \, \cos{x_3} d x_1 \, d x_2 \, d x_3$$
 
 ```
 import numpy as np
@@ -91,7 +91,7 @@ Visualizes convergence analysis.
 
 ### Example Usage
 A simple usage case for 1D integral evaluation, 
-$$ \int_0^2 x^3 - 2 x + 1 d x $$
+$$\int_0^2 x^3 - 2 x + 1 d x$$
 
 ```
 from mc import ND
