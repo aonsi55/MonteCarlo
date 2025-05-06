@@ -125,6 +125,7 @@ Integrating: 100%|██████████| 1000/1000 [00:02<00:00, 396.60
 Estimated integral: 0.60653211
 ```
 The function returns this value, which you can use in subsequent calculations.
+
 2. Non-Convergence Warning
 If the integration fails to converge (standard deviation difference exceeds threshold):
 ```
